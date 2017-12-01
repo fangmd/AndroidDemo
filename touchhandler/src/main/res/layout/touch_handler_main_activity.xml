@@ -7,4 +7,13 @@
     android:layout_height="match_parent"
     tools:context="com.fangmingdong.touchhandler.TouchHandlerMainActivity">
 
+
+    <Button
+        android:id="@+id/btn_touch_handler_print"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="printTouchEvent"
+        android:text="触摸事件打印"/>
+
+
 </android.support.constraint.ConstraintLayout>
