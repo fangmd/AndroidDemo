@@ -1,1 +1,1 @@
-include ':app', ':touchhandler', ':baselibrary'
+include ':app', ':touchhandler', ':baselibrary', ':youtubeview'

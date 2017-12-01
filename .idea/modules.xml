@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/baselibrary/baselibrary.iml" filepath="$PROJECT_DIR$/baselibrary/baselibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/touchhandler/touchhandler.iml" filepath="$PROJECT_DIR$/touchhandler/touchhandler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/youtubeview/youtubeview.iml" filepath="$PROJECT_DIR$/youtubeview/youtubeview.iml" />
     </modules>
   </component>
 </project>
