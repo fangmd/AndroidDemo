@@ -5,21 +5,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="com.nerc.youtubeview.YoutubeViewMain2Activity">
-
 
     <com.nerc.youtubeview.YoutubeView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#a1a1a1"
+        android:orientation="vertical"
+        android:layout_gravity="end"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/videoView"
+            android:layout_gravity="end"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:background="@color/colorAccent"/>
+
+        <LinearLayout
+            android:background="#a1a1a1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+        </LinearLayout>
 
 
     </com.nerc.youtubeview.YoutubeView>
