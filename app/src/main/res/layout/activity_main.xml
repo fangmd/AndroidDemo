@@ -10,7 +10,7 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CoordinatorLayout 使用方法"
+        android:text="CoordinatorLayout 使用方法 2"
         android:onClick="toCoordinatorLayout"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
