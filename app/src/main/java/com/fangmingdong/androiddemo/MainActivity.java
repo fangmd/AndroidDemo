@@ -7,6 +7,7 @@ import android.view.View;
 import com.fangmingdong.androiddemo.constainslayoutAnimate.ConstraintLayoutAnimateActivity;
 import com.fangmingdong.androiddemo.coordinatorlayout.CoordinatorLayoutActivity;
 import com.fangmingdong.androiddemo.monkeyclick.MonkeyClickActivity;
+import com.fangmingdong.androiddemo.weixinxiaochengxu.WeiXinActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,5 +27,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void toConstraintLayoutAnimate(View view) {
         ConstraintLayoutAnimateActivity.actionStart(this);
+    }
+
+    public void weixin(View view) {
+        WeiXinActivity.actionStart(this);
     }
 }
