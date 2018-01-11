@@ -130,13 +130,7 @@ public class PrintEventActivity extends AppCompatActivity {
         });
         animate.setDuration(800);
         animate.start();
-
-//        mTouchView.setX(x);
-//        mTouchView.setY(y);
     }
-
-
-
 
     //
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {

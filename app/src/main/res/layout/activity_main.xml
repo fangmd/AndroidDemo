@@ -9,11 +9,31 @@
     tools:context="com.fangmingdong.androiddemo.MainActivity">
 
     <Button
+        android:id="@+id/btn_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="CoordinatorLayout 使用方法 2"
         android:onClick="toCoordinatorLayout"
+        android:text="CoordinatorLayout 使用方法 2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/btn_monkey_click"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:onClick="toMonkeyClick"
+        android:text="模拟点击"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_main"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:onClick="toConstraintLayoutAnimate"
+        android:text="ConstraintLayout Animate"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_monkey_click"/>
 
 </android.support.constraint.ConstraintLayout>

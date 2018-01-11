@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AndroidDemo</string>
+
+    <string name="click_auto">辅助点击广告</string>
 </resources>

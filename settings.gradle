@@ -1,1 +1,6 @@
-include ':app', ':touchhandler', ':baselibrary', ':youtubeview'
+include ':touchhandler', ':baselibrary', ':youtubeview'
+
+//根据是否模块开发，是否引入app 模块
+if (!isModuleIsApplication.toBoolean()) {
+    include ':app'
+}
