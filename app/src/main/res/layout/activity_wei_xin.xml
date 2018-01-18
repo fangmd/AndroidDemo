@@ -8,6 +8,7 @@
     android:layout_height="match_parent"
     android:clipChildren="false"
     android:clipToPadding="false"
+
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     tools:context="com.fangmingdong.androiddemo.weixinxiaochengxu.WeiXinActivity">
@@ -17,15 +18,31 @@
         android:id="@+id/tv_head"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_marginBottom="-80dp"
+        android:background="@android:color/darker_gray"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:layout_marginTop="-80dp"
         android:gravity="center"
-        android:text="Head: "/>
+        android:text="Head: "
+        android:textColor="@android:color/white"/>
 
     <View
         android:id="@+id/body"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/colorPrimaryDark"/>
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:clickable="true"/>
+
+    <!--onInterceptTouchEvent返回false表示将down事件交由子View来处理；
+    若某一层子View的onTouchEvent返回了true，后续的move、up等事件都将先传递到ViewGroup的onInterceptTouchEvent的方法，
+    并继续层层传递下去，交由子View处理；
+    若子View的onTouchEvent都返回了false，则down事件将交由该ViewGroup的onTouchEvent来处理；
+    如果ViewGroup的onTouchEvent返回true，后续事件不再经过该ViewGroup的onInterceptTouchEvent方法，
+    直接传递给onTouchEvent方法处理。
+
+因为目前的子View（中间内容部分）是RelativeLayout，
+它的onTouchEvent默认返回了false（ListView等其他可滑动的控件不会有这个问题）。
+解决办法是设置android:clickable="true"。
+-->
 
 </com.fangmingdong.androiddemo.weixinxiaochengxu.widgets.WeiXinLinearLayout>

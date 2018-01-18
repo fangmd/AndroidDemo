@@ -6,6 +6,7 @@ package com.fangmingdong.androiddemo.weixinxiaochengxu.widgets;
 
 public enum State {
 
+    PULL_TO_REFRESH,
     RELEASE_TO_REFRESH,
     arrivedListHeight,
     RESET,

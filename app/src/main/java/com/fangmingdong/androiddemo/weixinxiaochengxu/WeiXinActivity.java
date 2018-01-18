@@ -4,9 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.fangmingdong.androiddemo.R;
+import com.fangmingdong.androiddemo.weixinxiaochengxu.widgets.IWeiXinLinearLayoutListener;
 import com.fangmingdong.androiddemo.weixinxiaochengxu.widgets.TextViewHeadView;
 import com.fangmingdong.androiddemo.weixinxiaochengxu.widgets.WeiXinLinearLayout;
 
@@ -15,6 +17,7 @@ import com.fangmingdong.androiddemo.weixinxiaochengxu.widgets.WeiXinLinearLayout
  */
 public class WeiXinActivity extends AppCompatActivity {
 
+    private static final String TAG = WeiXinActivity.class.getSimpleName();
     private WeiXinLinearLayout mLLRoot;
     private TextViewHeadView mTvHead;
     private View mViewBody;
@@ -37,6 +40,17 @@ public class WeiXinActivity extends AppCompatActivity {
 
 
         mLLRoot.setHeaderLayout(mTvHead);
+
+        mLLRoot.setPullRefreshEnabled(true);
+        mLLRoot.setRefreshListener(new IWeiXinLinearLayoutListener() {
+            @Override
+            public void refresh() {
+                Log.d(TAG, "refresh: ");
+            }
+        });
+
+
+
 
     }
 }

@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 public class WeiXinLinearLayout extends LinearLayout {
 
+    private static final String TAG = WeiXinLinearLayout.class.getSimpleName();
     /**
      * 表示是否拦截了触摸事件
      * 是否正在处理触摸事件
@@ -22,7 +23,11 @@ public class WeiXinLinearLayout extends LinearLayout {
     private boolean mIsHandledTouchEvent;
     private float mLastMotionY;
     private float mTouchSlop = ViewConfiguration.get(getContext()).getScaledTouchSlop();
-    private boolean mPullRefreshEnabled;
+    /**
+     * 是否允许下拉刷新
+     * 默认 true 允许
+     */
+    private boolean mPullRefreshEnabled = true;
     private float mOffsetRadio = 1f;
     private State mPullDownState;
     private IHeadView mHeaderLayout;
@@ -33,6 +38,10 @@ public class WeiXinLinearLayout extends LinearLayout {
      * 大于这个距离，增加 mOffsetRadio阻尼，
      */
     private int mHeaderListHeight;
+    /**
+     * 底部，这里没有设置底部布局
+     */
+    private int mFooterViewHeight;
     /**
      * HeadView 的高度
      */
@@ -49,36 +58,62 @@ public class WeiXinLinearLayout extends LinearLayout {
 
 
     public WeiXinLinearLayout(Context context) {
-        super(context);
+        super(context, null);
     }
 
     public WeiXinLinearLayout(Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+        super(context, attrs, 0);
     }
 
 
     public WeiXinLinearLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+
+        initView();
+    }
+
+    private void initView() {
+
+        // 得到Header的高度，这个高度需要用这种方式得到，在onLayout方法里面得到的高度始终是0
+//        getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//
+//                int pLeft = getPaddingLeft();
+//                int pTop = -mHeaderListHeight;
+//                int pRight = getPaddingRight();
+//                int pBottom = -mFooterViewHeight;
+//                setPadding(pLeft, pTop, pRight, pBottom);
+//
+//                getViewTreeObserver().removeGlobalOnLayoutListener(this);
+//            }
+//        });
     }
 
     //-- -temp
-    public void setHeaderLayout(IHeadView headView){
+    public void setHeaderLayout(IHeadView headView) {
         mHeaderLayout = headView;
 
 
-        mHeaderListHeight = getContext().getResources().getDisplayMetrics().densityDpi * 80;
+        mHeaderListHeight = (int) (getContext().getResources().getDisplayMetrics().density * 80);
         mHeaderHeight = headView.getContentHeight();
+
+        int pLeft = getPaddingLeft();
+        int pTop = -mHeaderListHeight;
+        int pRight = getPaddingRight();
+        int pBottom = -mHeaderListHeight;
+        setPadding(pLeft, pTop, pRight, pBottom);
     }
     //
 
 
     /**
      * 拦截触摸事件
-     *
+     * <p>
      * 在已知子控件不会处理触摸事件的时候可以不处理这个方法
      *
-     * @param ev    触摸事件对象
-     * @return  true： 表示拦截， false：不拦截
+     * @param ev 触摸事件对象
+     * @return true： 表示拦截， false：不拦截
      */
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -95,7 +130,6 @@ public class WeiXinLinearLayout extends LinearLayout {
         if (action != MotionEvent.ACTION_DOWN && mIsHandledTouchEvent) {
             return true;
         }
-
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
@@ -180,6 +214,7 @@ public class WeiXinLinearLayout extends LinearLayout {
      * 下拉过程处理
      */
     private void pullHeaderLayout(float value) {
+//        Log.d(TAG, "pullHeaderLayout: update head value=" + value);
         // 向上滑动，并且当前scrollY为0时，不滑动
         int oldScrollY = getScrollYValue();
         if (value < 0 && (oldScrollY - value) >= 0) {
@@ -191,20 +226,30 @@ public class WeiXinLinearLayout extends LinearLayout {
             return;
         }
 
-        //滑动布局
+        // 滑动布局 把 head 显示出来
         setScrollBy(0, -(int) value);
+
         int scrollY = Math.abs(getScrollYValue());
         if (null != mHeaderLayout && 0 != mHeaderHeight) {
             if (scrollY >= mHeaderListHeight) {
                 mHeaderLayout.setState(State.arrivedListHeight);
-                setOffsetRadio(2.0f); // 内容列表完全展开后阻尼值变大
+                setOffsetRadio(3.0f); // 内容列表完全展开后阻尼值变大
             } else {
                 setOffsetRadio(1.0f);
             }
             mHeaderLayout.onPull(scrollY);// 将滑动距离实时传给头部，以实现出我们需要的动画
         }
-    }
 
+        // 未处于刷新状态，更新箭头
+        if (isPullRefreshEnabled() && !isPullRefreshing()) {
+            if (scrollY > mHeaderHeight) {
+                mPullDownState = State.RELEASE_TO_REFRESH;
+            } else {
+                mPullDownState = State.PULL_TO_REFRESH;
+            }
+            mHeaderLayout.setState(mPullDownState);
+        }
+    }
 
 
     /**
@@ -215,24 +260,30 @@ public class WeiXinLinearLayout extends LinearLayout {
         final boolean refreshing = isPullRefreshing();
 
         if (refreshing && scrollY <= mHeaderHeight) {
+            mHeaderLayout.setState(State.RESET);
             smoothScrollTo(0);
             return;
         }
 
         if (refreshing) {
+            mHeaderLayout.setState(State.REFRESHING);
             smoothScrollTo(-mHeaderHeight);
         } else {
+            mHeaderLayout.setState(State.RESET);
             smoothScrollTo(0);
         }
     }
 
 
-
     private void startRefreshing() {
+        mHeaderLayout.setState(State.REFRESHING);
+        mPullDownState = State.REFRESHING;
 
+        // 使用接口回调 调用 刷新接口
+        if (mRefreshListener != null) {
+            mRefreshListener.refresh();
+        }
     }
-
-
 
 
     /**
@@ -286,6 +337,7 @@ public class WeiXinLinearLayout extends LinearLayout {
 
     /**
      * 设置 阻尼
+     *
      * @param v
      */
     private void setOffsetRadio(float v) {
@@ -425,4 +477,11 @@ public class WeiXinLinearLayout extends LinearLayout {
         }
     }
 
+
+    // 下拉刷新接口
+    private IWeiXinLinearLayoutListener mRefreshListener;
+
+    public void setRefreshListener(IWeiXinLinearLayoutListener refreshListener) {
+        mRefreshListener = refreshListener;
+    }
 }
