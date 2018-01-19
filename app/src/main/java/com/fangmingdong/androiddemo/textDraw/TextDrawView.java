@@ -2,10 +2,12 @@ package com.fangmingdong.androiddemo.textDraw;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.fangmingdong.androiddemo.R;
@@ -17,8 +19,9 @@ import com.fangmingdong.androiddemo.R;
 public class TextDrawView extends View {
 
 
-    private String mText="default";
-    private int textSize = 13;  //sp
+    private static final String TAG = TextDrawView.class.getSimpleName();
+    private String mText = "default";
+    private int textSize = 36;  //sp
     private int mTextColor = Color.BLACK;
     private Paint mPaint;
     private float mDensity;
@@ -44,7 +47,7 @@ public class TextDrawView extends View {
 
         if (attrs != null) {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TextDrawView);
-            textSize = typedArray.getInt(R.styleable.TextDrawView_tdv_text_size, 13);
+            textSize = typedArray.getInt(R.styleable.TextDrawView_tdv_text_size, 36);
             mTextColor = typedArray.getColor(R.styleable.TextDrawView_tdv_text_color, Color.BLACK);
             typedArray.recycle();
         }
@@ -69,6 +72,32 @@ public class TextDrawView extends View {
         });
     }
 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+
+        float midY = getResources().getDisplayMetrics().density * 100;
+
+        float ascent = mPaint.ascent();
+        float descent = mPaint.descent();
+        float textHeight = -ascent + descent;
+        Log.d(TAG, "onDraw: ascent=" + ascent + ", descent=" + descent + ", text Height=" + textHeight);
+
+        float midY2 = getHeight()/2 - (textHeight/2);
+
+        //
+        Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
+        float y = getHeight() / 2 + (Math.abs(fontMetrics.ascent) - fontMetrics.descent) / 2;
+        //
+
+        canvas.drawText(mText, 0, y, mPaint);
+
+        Log.d(TAG, "onDraw: ascent=" + ascent + ", descent=" + descent + ", text Height=" + (-ascent + descent));
+
+
+    }
+
+    //---- measure
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 //        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -119,6 +148,7 @@ public class TextDrawView extends View {
 
         return ret;
     }
+    //---- -----------
 
     private void addOne() {
 
