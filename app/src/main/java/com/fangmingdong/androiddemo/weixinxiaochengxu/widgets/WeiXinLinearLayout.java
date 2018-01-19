@@ -203,7 +203,6 @@ public class WeiXinLinearLayout extends LinearLayout {
                     }
                 }
                 break;
-
             default:
                 break;
         }
@@ -292,7 +291,11 @@ public class WeiXinLinearLayout extends LinearLayout {
      * @param newScrollValue 滚动的值
      */
     private void smoothScrollTo(int newScrollValue) {
+        // 平滑滑动方式一： 使用 Runnable， postDelayed 实现不断调用 scrollTo(x, y); 实现动画，利用系统查值器 DecelerateInterpolator 实现更理想的动画效果
         smoothScrollTo(newScrollValue, getSmoothScrollDuration(), 0);
+
+        // 平滑滑动方式二：
+
     }
 
     private long getSmoothScrollDuration() {
