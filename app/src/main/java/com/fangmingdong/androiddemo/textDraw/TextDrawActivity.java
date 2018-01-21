@@ -11,7 +11,7 @@ public class TextDrawActivity extends AppCompatActivity {
 
     private TextDrawView mTDV;
 
-    public static void actionStart(Context context){
+    public static void actionStart(Context context) {
         Intent intent = new Intent(context, TextDrawActivity.class);
 
         context.startActivity(intent);
@@ -27,6 +27,22 @@ public class TextDrawActivity extends AppCompatActivity {
         mTDV = (TextDrawView) findViewById(R.id.tdv);
 
         mTDV.setText("方明东");
+
+        new Thread(() -> {
+
+            while (true) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                runOnUiThread(()->{
+                    mTDV.addNumber();
+                });
+            }
+
+        }).start();
 
 
     }

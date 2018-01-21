@@ -8,4 +8,8 @@
 
     </declare-styleable>
 
+    <declare-styleable name="AnimateView">
+        <attr name="av_text" format="string"/>
+    </declare-styleable>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.fangmingdong.androiddemo.textDraw;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -7,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.fangmingdong.androiddemo.R;
@@ -26,6 +26,9 @@ public class TextDrawView extends View {
     private Paint mPaint;
     private float mDensity;
     private boolean isLiked;
+
+    private int oldNumber;
+    private int number;
 
     public TextDrawView(Context context) {
         this(context, null);
@@ -76,23 +79,22 @@ public class TextDrawView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        float midY = getResources().getDisplayMetrics().density * 100;
-
         float ascent = mPaint.ascent();
         float descent = mPaint.descent();
-        float textHeight = -ascent + descent;
-        Log.d(TAG, "onDraw: ascent=" + ascent + ", descent=" + descent + ", text Height=" + textHeight);
-
-        float midY2 = getHeight()/2 - (textHeight/2);
 
         //
         Paint.FontMetrics fontMetrics = mPaint.getFontMetrics();
         float y = getHeight() / 2 + (Math.abs(fontMetrics.ascent) - fontMetrics.descent) / 2;
         //
 
-        canvas.drawText(mText, 0, y, mPaint);
+        canvas.drawRGB(0x56, 0x56, 0x56);
 
-        Log.d(TAG, "onDraw: ascent=" + ascent + ", descent=" + descent + ", text Height=" + (-ascent + descent));
+        mPaint.setAlpha(((int) (255 * progress)));
+        canvas.drawText(String.valueOf(number), 0, y - (ascent*(1-progress)), mPaint);
+
+
+        mPaint.setAlpha(((int) (255 * (1 - progress))));
+        canvas.drawText(String.valueOf(oldNumber), 0, y + (ascent*(progress)), mPaint);
 
 
     }
@@ -117,11 +119,12 @@ public class TextDrawView extends View {
                 ret = MeasureSpec.getSize(heightMeasureSpec);
                 break;
             case MeasureSpec.AT_MOST:   //
-                ret = (int) (mPaint.measureText(String.valueOf(mText)) + getPaddingTop() + getPaddingBottom());
+                float height = -mPaint.ascent() + mPaint.descent();
+                ret = (int) height * 3 + getPaddingTop() + getPaddingBottom();
                 ret = Math.min(ret, specSize);
                 break;
             case MeasureSpec.UNSPECIFIED:
-                ret = (int) (mPaint.measureText(String.valueOf(mText)) + getPaddingTop() + getPaddingBottom());
+                ret = (int) (mPaint.measureText(String.valueOf(mText)) * 3 + getPaddingTop() + getPaddingBottom());
                 break;
         }
 
@@ -138,11 +141,11 @@ public class TextDrawView extends View {
                 ret = MeasureSpec.getSize(widthMeasureSpec);
                 break;
             case MeasureSpec.AT_MOST:   //
-                ret = (int) (mPaint.measureText(String.valueOf(mText)) + getPaddingLeft() + getPaddingRight());
+                ret = (int) (mPaint.measureText(String.valueOf(oldNumber*10)) + getPaddingLeft() + getPaddingRight());
                 ret = Math.min(ret, specSize);
                 break;
             case MeasureSpec.UNSPECIFIED:
-                ret = (int) (mPaint.measureText(String.valueOf(mText)) + getPaddingLeft() + getPaddingRight());
+                ret = (int) (mPaint.measureText(String.valueOf(oldNumber*10)) + getPaddingLeft() + getPaddingRight());
                 break;
         }
 
@@ -159,9 +162,20 @@ public class TextDrawView extends View {
     }
 
 
+    private float progress;
+
+    public float getProgress() {
+        return progress;
+    }
+
+    public void setProgress(float progress) {
+        this.progress = progress;
+        invalidate();
+    }
+
     public void setText(String text) {
         mText = text;
-        invalidate();
+        requestLayout();
     }
 
     public boolean isLiked() {
@@ -172,5 +186,23 @@ public class TextDrawView extends View {
         isLiked = liked;
     }
 
+
+    public void addNumber() {
+        oldNumber = number;
+        ++number;
+
+
+        if (number / 10 != oldNumber /10) {
+            requestLayout();
+        }
+
+        startAnimate();
+    }
+
+    private void startAnimate() {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(this, "progress", 0, 1);
+        animator.setDuration(800);
+        animator.start();
+    }
 
 }
