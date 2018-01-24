@@ -7,6 +7,7 @@ import android.view.View;
 import com.fangmingdong.androiddemo.constainslayoutAnimate.ConstraintLayoutAnimateActivity;
 import com.fangmingdong.androiddemo.coordinatorlayout.CoordinatorLayoutActivity;
 import com.fangmingdong.androiddemo.monkeyclick.MonkeyClickActivity;
+import com.fangmingdong.androiddemo.recyclerViewSideScroll.RecyclerViewSideScrollActivity;
 import com.fangmingdong.androiddemo.scrollView.ScrollViewActivity;
 import com.fangmingdong.androiddemo.textDraw.TextDrawActivity;
 import com.fangmingdong.androiddemo.weixinxiaochengxu.WeiXinActivity;
@@ -50,5 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void scrollView(View view) {
         ScrollViewActivity.actionStart(this);
+    }
+
+    public void recyclerViewSideScroller(View view) {
+        RecyclerViewSideScrollActivity.actionStart(this);
     }
 }
