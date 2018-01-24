@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.fangmingdong.androiddemo.scrollView.ScrollViewActivity">
+
+
+    <com.fangmingdong.androiddemo.scrollView.CustomScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/csv"
+        android:background="@color/colorPrimary"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:background="@color/colorAccent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="Android里OverScroller类是为了实现View平滑滚动的一个Helper类。通常在自定义的View时使用，在View中定义一个私有成员mScroller = new OverScroller(context)。设置mScroller滚动的位置时，并不会导致View的滚动，通常是用mScroller记录/计算View滚动的位置，再重写View的computeScroll()，完成实际的滚动。 相关API介绍如下"
+            android:textSize="24sp"/>
+
+
+    </com.fangmingdong.androiddemo.scrollView.CustomScrollView>
+
+</android.support.constraint.ConstraintLayout>

@@ -49,13 +49,16 @@
         <activity android:name=".weixinxiaochengxu.WeiXinActivity">
         </activity>
         <activity android:name=".textDraw.TextDrawActivity">
+
+        </activity>
+        <activity android:name=".customViewAniamte.CustomViewAnimateActivity">
+        </activity>
+        <activity android:name=".scrollView.ScrollViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".customViewAniamte.CustomViewAnimateActivity">
         </activity>
     </application>
 

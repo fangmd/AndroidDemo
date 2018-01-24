@@ -1,12 +1,13 @@
 package com.fangmingdong.androiddemo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.fangmingdong.androiddemo.constainslayoutAnimate.ConstraintLayoutAnimateActivity;
 import com.fangmingdong.androiddemo.coordinatorlayout.CoordinatorLayoutActivity;
 import com.fangmingdong.androiddemo.monkeyclick.MonkeyClickActivity;
+import com.fangmingdong.androiddemo.scrollView.ScrollViewActivity;
 import com.fangmingdong.androiddemo.textDraw.TextDrawActivity;
 import com.fangmingdong.androiddemo.weixinxiaochengxu.WeiXinActivity;
 
@@ -16,6 +17,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+//        OverScroller mOverScroller = new OverScroller(this);
+//
+//        // Start scrolling by providing a starting point and the distance to travel.
+//        mOverScroller.startScroll(0, 0,100, 100, 500);
+
+
     }
 
     public void toCoordinatorLayout(View view) {
@@ -37,5 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void toTextDraw(View view) {
         TextDrawActivity.actionStart(this);
+    }
+
+    public void scrollView(View view) {
+        ScrollViewActivity.actionStart(this);
     }
 }
