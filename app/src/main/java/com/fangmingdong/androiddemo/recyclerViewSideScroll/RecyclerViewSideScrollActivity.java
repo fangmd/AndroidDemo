@@ -2,11 +2,10 @@ package com.fangmingdong.androiddemo.recyclerViewSideScroll;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
+import android.widget.TextView;
 
 import com.fangmingdong.androiddemo.R;
 
@@ -26,21 +25,28 @@ public class RecyclerViewSideScrollActivity extends AppCompatActivity {
 
         mRv = (RecyclerView) findViewById(R.id.rv);
 
-        mRv.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-                outRect.set(0, 0, 0, 10);
-            }
-        });
+//        mRv.addItemDecoration(new RecyclerView.ItemDecoration() {
+//            @Override
+//            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+//                super.getItemOffsets(outRect, view, parent, state);
+//                outRect.set(0, 0, 0, 10);
+//            }
+//        });
 
 
         RAdapter adapter = new RAdapter();
         mRv.setAdapter(adapter);
 
 
-    }
+        TextView tv = (TextView) findViewById(R.id.tv_slide_scroll_item);
+//        tv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(RecyclerViewSideScrollActivity.this, "Click", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
+    }
 
 
 }

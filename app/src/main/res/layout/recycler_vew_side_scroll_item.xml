@@ -1,42 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="80dp">
 
-    <com.fangmingdong.androiddemo.recyclerViewSideScroll.SlideFrameLayout
-        android:layout_width="match_parent"
+    <com.fangmingdong.androiddemo.recyclerViewSideScroll.SlideFrameLayoutTranslation
         android:id="@+id/sfl"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:focusable="true"
         android:clickable="true"
-        android:background="@android:color/holo_red_dark">
+        android:focusable="true">
 
-
-        <FrameLayout
-            android:id="@+id/fl_content"
+        <RelativeLayout
+            android:id="@+id/rl_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@android:color/white">
 
             <TextView
                 android:id="@+id/tv_slide_scroll_item"
-                android:focusable="true"
-                android:clickable="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/holo_green_dark"
+                android:clickable="true"
+                android:focusable="true"
                 android:gravity="center"
                 tools:text="Text"/>
 
 
+        </RelativeLayout>
 
-        </FrameLayout>
-
-
-
-
-    </com.fangmingdong.androiddemo.recyclerViewSideScroll.SlideFrameLayout>
+    </com.fangmingdong.androiddemo.recyclerViewSideScroll.SlideFrameLayoutTranslation>
 
 </FrameLayout>

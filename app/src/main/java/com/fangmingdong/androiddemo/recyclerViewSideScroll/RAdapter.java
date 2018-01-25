@@ -5,8 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fangmingdong.androiddemo.R;
 
@@ -47,17 +48,17 @@ public class RAdapter extends RecyclerView.Adapter<RAdapter.VH> {
         String s = mDatas.get(position);
         holder.mTv.setText(s);
 
-//        ViewGroup.LayoutParams layoutParams = holder.mTv.getLayoutParams();
-//        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-//        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-//        holder.mTv.setLayoutParams(layoutParams);
-
         ViewGroup.LayoutParams layoutParams = holder.mSFL.getLayoutParams();
         layoutParams.width = mContext.getResources().getDisplayMetrics().widthPixels;
         layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
         holder.mSFL.setLayoutParams(layoutParams);
 
-        holder.mSFL.resetState();
+        holder.mTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, s, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -68,15 +69,15 @@ public class RAdapter extends RecyclerView.Adapter<RAdapter.VH> {
     public static class VH extends RecyclerView.ViewHolder {
 
         private final TextView mTv;
-        private final SlideFrameLayout mSFL;
-        private final FrameLayout mFL;
+        private final SlideFrameLayoutTranslation mSFL;
+        private final RelativeLayout mFL;
 
         public VH(View itemView) {
             super(itemView);
 
-            mSFL = ((SlideFrameLayout) itemView.findViewById(R.id.sfl));
+            mSFL = ((SlideFrameLayoutTranslation) itemView.findViewById(R.id.sfl));
             mTv = ((TextView) itemView.findViewById(R.id.tv_slide_scroll_item));
-            mFL = ((FrameLayout) itemView.findViewById(R.id.fl_content));
+            mFL = ((RelativeLayout) itemView.findViewById(R.id.rl_content));
         }
     }
 }

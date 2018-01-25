@@ -1,5 +1,6 @@
 package com.fangmingdong.androiddemo.recyclerViewSideScroll;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.fangmingdong.androiddemo.R;
 
@@ -17,9 +18,9 @@ import com.fangmingdong.androiddemo.R;
  * Created by double on 2018/1/24.
  */
 
-public class SlideFrameLayout extends FrameLayout implements View.OnClickListener {
+public class SlideFrameLayoutTranslation extends FrameLayout implements View.OnClickListener {
 
-    private static final String TAG = SlideFrameLayout.class.getSimpleName();
+    private static final String TAG = SlideFrameLayoutTranslation.class.getSimpleName();
 
     private static final int MOVE_TYPE_LEFT = 0;
     private static final int MOVE_TYPE_RIGHT = 1;
@@ -36,25 +37,30 @@ public class SlideFrameLayout extends FrameLayout implements View.OnClickListene
     private int mCloseScrollX = 0;
 
 
-    private View mViewSlideBg;
     private float mLastX;
     private float mLastY;
     private int mState;
     private View mConfirm;
     private View mCancel;
-    private RelativeLayout mRlContent;
+    /**
+     * 背景 控件，滑动后看到的内容
+     */
+    private View mViewSlideBg;
+    /**
+     * 覆盖在背景之上的控件
+     */
+    private View mViewContent;
 
-    public SlideFrameLayout(@NonNull Context context) {
+    public SlideFrameLayoutTranslation(@NonNull Context context) {
         this(context, null);
     }
 
-    public SlideFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public SlideFrameLayoutTranslation(@NonNull Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SlideFrameLayout(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public SlideFrameLayoutTranslation(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
 
         addBgView(context);
     }
@@ -73,7 +79,15 @@ public class SlideFrameLayout extends FrameLayout implements View.OnClickListene
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-        mRlContent = ((RelativeLayout)findViewById(R.id.rl_content));
+        int childCount = getChildCount();
+        if (childCount > 2) {
+            //只能有一个直接子控件，在使用的时候要注意
+            throw new RuntimeException("should only have one direct child view");
+        }
+
+        View childAt = getChildAt(1);
+        mViewContent = childAt;
+//        mViewContent = ((RelativeLayout) findViewById(R.id.rl_content));
         mExpandScrollX = mConfirm.getMeasuredWidth() + mCancel.getMeasuredWidth();
     }
 
@@ -144,19 +158,17 @@ public class SlideFrameLayout extends FrameLayout implements View.OnClickListene
                 int type = moveType(xDistance, yDistance);
                 switch (type) {
                     case MOVE_TYPE_LEFT:
+                        contentScrollBy(-(int) xDistance, 0);
 
-                        mRlContent.scrollBy(-(int) xDistance, 0);
                         setState(STATE_EXPAND);
                         Log.d(TAG, "onTouchEvent: MOVE_TYPE_LEFT");
                         return true;
                     case MOVE_TYPE_RIGHT:
-                        int scrollX = mRlContent.getScrollX();
-                        if (scrollX == 0) {
-                            // close 状态，不能向右滑动
+                        if (!canRightScroll()) {
                             return true;
                         }
 
-                        mRlContent.scrollBy(-(int) xDistance, 0);
+                        contentScrollBy(-(int) xDistance, 0);
                         setState(STATE_CLOSE);
 
                         Log.d(TAG, "onTouchEvent: MOVE_TYPE_RIGHT");
@@ -176,6 +188,33 @@ public class SlideFrameLayout extends FrameLayout implements View.OnClickListene
         return true;
     }
 
+    /**
+     * 判断是否能够向右滑动
+     * // close 状态，不能向右滑动
+     */
+    private boolean canRightScroll() {
+        float translationX = mViewContent.getTranslationX();
+        return translationX != 0;
+    }
+
+    private void contentScrollBy(int x, int y) {
+        float translationX = mViewContent.getTranslationX() + -x;
+        float translationY = mViewContent.getTranslationY() + -y;
+        mViewContent.setTranslationX(translationX);
+        mViewContent.setTranslationY(translationY);
+    }
+
+    /**
+     * smooth 滑动
+     */
+    private void contentScrollTo(int x, int y) {
+        ObjectAnimator translationXAnimator = ObjectAnimator.ofFloat(mViewContent, "translationX", mViewContent.getTranslationX(), x);
+        ObjectAnimator translationYAnimator = ObjectAnimator.ofFloat(mViewContent, "translationY", mViewContent.getTranslationY(), y);
+        translationXAnimator.start();
+        translationYAnimator.start();
+//        mViewContent.setTranslationX(-x);
+//        mViewContent.setTranslationY(-y);
+    }
 
     private int moveType(float x, float y) {
         int ret = MOVE_TYPE_UNKNOW;
@@ -201,25 +240,16 @@ public class SlideFrameLayout extends FrameLayout implements View.OnClickListene
         setStateAndScroll(STATE_CLOSE);
     }
 
-    //    @Override
-//    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-//
-//        View view = getChildAt(0);
-//
-//
-//        super.onLayout(changed, left, top, right, bottom);
-//
-//
-//    }
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_confirm:
                 Log.d(TAG, "onClick: Confirm");
+                Toast.makeText(getContext(), "Confirm", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.tv_cancel:
                 Log.d(TAG, "onClick: Cancel");
+                Toast.makeText(getContext(), "Cancel", Toast.LENGTH_SHORT).show();
                 break;
         }
     }
@@ -237,19 +267,13 @@ public class SlideFrameLayout extends FrameLayout implements View.OnClickListene
     private void autoScrollLayout() {
         switch (mState) {
             case STATE_EXPAND:
-                if (mRlContent != null) {
-                    mRlContent.scrollTo(mExpandScrollX, 0);
-                }
+                contentScrollTo(-mExpandScrollX, 0);
                 break;
             case STATE_CLOSE:
-                if (mRlContent != null) {
-                    mRlContent.scrollTo(mCloseScrollX, 0);
-                }
+                contentScrollTo(-mCloseScrollX, 0);
                 break;
         }
     }
-
-
 
     @Override
     protected void onAttachedToWindow() {
@@ -269,3 +293,4 @@ public class SlideFrameLayout extends FrameLayout implements View.OnClickListene
         Log.d(TAG, "onDetachedFromWindow: ");
     }
 }
+

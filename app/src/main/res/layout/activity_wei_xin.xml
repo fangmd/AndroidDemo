@@ -34,10 +34,15 @@
         android:clickable="true"/>
 
     <!--onInterceptTouchEvent返回false表示将down事件交由子View来处理；
-    若某一层子View的onTouchEvent返回了true，后续的move、up等事件都将先传递到ViewGroup的onInterceptTouchEvent的方法，
+
+    若某一层子View的onTouchEvent返回了true，
+    后续的move、up等事件都将先传递到ViewGroup的onInterceptTouchEvent的方法，
     并继续层层传递下去，交由子View处理；
-    若子View的onTouchEvent都返回了false，则down事件将交由该ViewGroup的onTouchEvent来处理；
-    如果ViewGroup的onTouchEvent返回true，后续事件不再经过该ViewGroup的onInterceptTouchEvent方法，
+
+    若子View的onTouchEvent都返回了false，
+    则down事件将交由该ViewGroup的onTouchEvent来处理；
+    如果ViewGroup的onTouchEvent返回true，
+    后续事件不再经过该ViewGroup的onInterceptTouchEvent方法，
     直接传递给onTouchEvent方法处理。
 
 因为目前的子View（中间内容部分）是RelativeLayout，

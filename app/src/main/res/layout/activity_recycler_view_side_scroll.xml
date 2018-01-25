@@ -11,7 +11,42 @@
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey"
+        android:visibility="visible"
         app:layoutManager="LinearLayoutManager"/>
+
+
+    <!--<com.fangmingdong.androiddemo.recyclerViewSideScroll.SlideFrameLayoutTranslation-->
+        <!--android:id="@+id/sfl"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:clickable="true"-->
+        <!--android:focusable="true"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintTop_toTopOf="parent">-->
+
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/rl_content"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@android:color/white"-->
+            <!--android:clickable="true"-->
+            <!--android:focusable="true">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_slide_scroll_item"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="@android:color/holo_green_dark"-->
+                <!--android:gravity="center"-->
+                <!--android:text="Text"/>-->
+
+            <!--<ImageView-->
+                <!--android:layout_width="80dp"-->
+                <!--android:layout_height="80dp"-->
+                <!--android:src="@mipmap/ic_launcher"/>-->
+
+        <!--</RelativeLayout>-->
+
+    <!--</com.fangmingdong.androiddemo.recyclerViewSideScroll.SlideFrameLayoutTranslation>-->
 
 </android.support.constraint.ConstraintLayout>
