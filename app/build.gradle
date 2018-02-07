@@ -34,6 +34,8 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     implementation 'com.github.todou:appbarspring:1.0.4'
+    implementation 'com.jakewharton:disklrucache:2.0.2'
+
 
 
     if (isModuleIsApplication.toBoolean()) {

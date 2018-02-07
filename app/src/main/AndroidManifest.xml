@@ -3,6 +3,9 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.fangmingdong.androiddemo">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -13,12 +16,12 @@
         tools:replace="android:allowBackup,android:label">
         <activity android:name=".MainActivity">
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN"/> -->
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN"/>
 
 
-            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-            <!-- </intent-filter> -->
+             <category android:name="android.intent.category.LAUNCHER"/>
+             </intent-filter>
         </activity>
         <activity android:name=".coordinatorlayout.WangYiYun.YouDaoMineActivity">
         </activity>
@@ -56,11 +59,11 @@
 
         </activity>
         <activity android:name=".recyclerViewSideScroll.RecyclerViewSideScrollActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
     </application>
 
