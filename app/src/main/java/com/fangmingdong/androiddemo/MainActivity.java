@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
 import com.fangmingdong.androiddemo.constainslayoutAnimate.ConstraintLayoutAnimateActivity;
@@ -37,12 +36,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        try {
-            diskLruCache();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Log.e(TAG, "onCreate: ", e);
-        }
+//        try {
+//            diskLruCache();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            Log.e(TAG, "onCreate: ", e);
+//        }
 
     }
 
@@ -97,5 +96,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void recyclerViewSideScroller(View view) {
         RecyclerViewSideScrollActivity.actionStart(this);
+    }
+
+    public void jobSchedule(View view) {
+
     }
 }

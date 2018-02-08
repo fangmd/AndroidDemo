@@ -12,16 +12,11 @@
         android:label="@string/touch_handler_app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:name=".App"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup,android:label">
         <activity android:name=".MainActivity">
 
-             <intent-filter>
-             <action android:name="android.intent.action.MAIN"/>
-
-
-             <category android:name="android.intent.category.LAUNCHER"/>
-             </intent-filter>
         </activity>
         <activity android:name=".coordinatorlayout.WangYiYun.YouDaoMineActivity">
         </activity>
@@ -56,15 +51,42 @@
         <activity android:name=".customViewAniamte.CustomViewAnimateActivity">
         </activity>
         <activity android:name=".scrollView.ScrollViewActivity">
-
         </activity>
         <activity android:name=".recyclerViewSideScroll.RecyclerViewSideScrollActivity">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN"/>-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
         </activity>
+        <activity android:name=".jobschedule.JobScheduleActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".jobschedule.net.WifiJobService"
+            android:enabled="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="true">
+        </service>
+        <service
+            android:name=".jobschedule.net.GPRSJobService"
+            android:enabled="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="true">
+        </service>
+        <service
+            android:name=".jobschedule.net.NoNetJobService"
+            android:enabled="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="true">
+        </service>
+        <service
+            android:name=".jobschedule.time.DelayJobService"
+            android:enabled="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"
+            android:exported="true">
+        </service>
+
     </application>
 
 </manifest>
